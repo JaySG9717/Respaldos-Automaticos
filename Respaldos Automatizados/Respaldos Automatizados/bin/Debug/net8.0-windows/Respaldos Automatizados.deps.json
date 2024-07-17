@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Respaldos Automatizados/1.0.0": {
+        "runtime": {
+          "Respaldos Automatizados.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Respaldos Automatizados/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

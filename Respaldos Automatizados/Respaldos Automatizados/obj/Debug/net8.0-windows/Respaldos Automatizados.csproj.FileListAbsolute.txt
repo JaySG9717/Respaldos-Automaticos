@@ -1,0 +1,16 @@
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos_Automatizados.Form1.resources
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.csproj.GenerateResource.cache
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.AssemblyInfoInputs.cache
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.AssemblyInfo.cs
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.csproj.CoreCompileInputs.cache
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\bin\Debug\net8.0-windows\Respaldos Automatizados.exe
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\bin\Debug\net8.0-windows\Respaldos Automatizados.deps.json
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\bin\Debug\net8.0-windows\Respaldos Automatizados.runtimeconfig.json
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\bin\Debug\net8.0-windows\Respaldos Automatizados.dll
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\bin\Debug\net8.0-windows\Respaldos Automatizados.pdb
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.dll
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\refint\Respaldos Automatizados.dll
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.pdb
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\Respaldos Automatizados.genruntimeconfig.cache
+C:\Users\Jay Foxy\source\repos\Respaldos Automatizados\Respaldos Automatizados\obj\Debug\net8.0-windows\ref\Respaldos Automatizados.dll
