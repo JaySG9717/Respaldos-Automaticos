@@ -1,0 +1,169 @@
+CODIGO FUNCIONAL CON BARRA DE PROGRESO, FALTA AÑADIR TIEMPO RESTANTE DE RESPALDO
+
+using System;
+using System.IO;
+using System.Windows.Forms;
+
+namespace Respaldos_Automatizados
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void btn_seleccionar_unidad_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "Selecciona la carpeta de destino";
+                folderBrowserDialog.ShowNewFolderButton = true;
+
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedPath = folderBrowserDialog.SelectedPath;
+                    lbl_descargas_unidadred.Text = Path.Combine(selectedPath, "Descargas");
+                    lbl_documentos_unidadred.Text = Path.Combine(selectedPath, "Documentos");
+                    lbl_imagenes_unidadred.Text = Path.Combine(selectedPath, "Imagenes");
+                    lbl_escritorio_unidadred.Text = Path.Combine(selectedPath, "Escritorio");
+                }
+            }
+        }
+
+        private void btn_respaldar_Click(object sender, EventArgs e)
+        {
+            // Rutas de las carpetas locales predeterminadas
+            string sourceDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string sourceDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string sourcePictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            string sourceDownloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+
+            string destinationDesktop = lbl_escritorio_unidadred.Text;
+            string destinationDocuments = lbl_documentos_unidadred.Text;
+            string destinationPictures = lbl_imagenes_unidadred.Text;
+            string destinationDownloads = lbl_descargas_unidadred.Text;
+
+            if (string.IsNullOrEmpty(destinationDesktop) || string.IsNullOrEmpty(destinationDocuments) ||
+                string.IsNullOrEmpty(destinationPictures) || string.IsNullOrEmpty(destinationDownloads))
+            {
+                MessageBox.Show("Por favor, selecciona una ruta de destino válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                // Contar los archivos totales a copiar
+                int totalFiles = CountFiles(sourceDesktop) + CountFiles(sourceDocuments) + CountFiles(sourcePictures) + CountFiles(sourceDownloads);
+                int copiedFiles = 0;
+
+                // Inicializar la barra de progreso
+                pb_progreso_respaldo.Minimum = 0;
+                pb_progreso_respaldo.Maximum = totalFiles;
+                pb_progreso_respaldo.Value = 0;
+
+                // Copiar el contenido de las carpetas
+                CopyDirectoryContent(sourceDesktop, destinationDesktop, ref copiedFiles, totalFiles);
+                CopyDirectoryContent(sourceDocuments, destinationDocuments, ref copiedFiles, totalFiles);
+                CopyDirectoryContent(sourcePictures, destinationPictures, ref copiedFiles, totalFiles);
+                CopyDirectoryContent(sourceDownloads, destinationDownloads, ref copiedFiles, totalFiles);
+
+                MessageBox.Show("Archivos copiados exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CopyDirectoryContent(string sourceDir, string destinationDir, ref int copiedFiles, int totalFiles)
+        {
+            // Crear el directorio de destino si no existe
+            if (!Directory.Exists(destinationDir))
+            {
+                Directory.CreateDirectory(destinationDir);
+            }
+
+            // Copiar los archivos del directorio
+            foreach (var file in Directory.GetFiles(sourceDir))
+            {
+                try
+                {
+                    var destFile = Path.Combine(destinationDir, Path.GetFileName(file));
+                    File.Copy(file, destFile, true);
+                    copiedFiles++;
+                    UpdateProgressBar(copiedFiles, totalFiles);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Ignorar archivos a los que no se puede acceder
+                    Console.WriteLine($"No se pudo acceder al archivo {file}.");
+                }
+                catch (Exception ex)
+                {
+                    // Manejar otros errores
+                    Console.WriteLine($"Error al copiar el archivo {file}: {ex.Message}");
+                }
+            }
+
+            // Copiar los subdirectorios de forma recursiva
+            foreach (var subdir in Directory.GetDirectories(sourceDir))
+            {
+                try
+                {
+                    var destSubdir = Path.Combine(destinationDir, Path.GetFileName(subdir));
+                    CopyDirectoryContent(subdir, destSubdir, ref copiedFiles, totalFiles);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Ignorar directorios a los que no se puede acceder
+                    Console.WriteLine($"No se pudo acceder al directorio {subdir}.");
+                }
+                catch (Exception ex)
+                {
+                    // Manejar otros errores
+                    Console.WriteLine($"Error al copiar el directorio {subdir}: {ex.Message}");
+                }
+            }
+        }
+
+        private int CountFiles(string dir)
+        {
+            int count = 0;
+            try
+            {
+                count += Directory.GetFiles(dir).Length;
+                foreach (var subdir in Directory.GetDirectories(dir))
+                {
+                    count += CountFiles(subdir);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // Ignorar directorios a los que no se puede acceder
+                Console.WriteLine($"No se pudo acceder al directorio {dir}.");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error al contar los archivos en {dir}: {ex.Message}");
+            }
+            return count;
+        }
+
+        private void UpdateProgressBar(int copiedFiles, int totalFiles)
+        {
+            if (pb_progreso_respaldo.InvokeRequired)
+            {
+                pb_progreso_respaldo.Invoke(new Action(() =>
+                {
+                    pb_progreso_respaldo.Value = copiedFiles;
+                }));
+            }
+            else
+            {
+                pb_progreso_respaldo.Value = copiedFiles;
+            }
+        }
+    }
+}
